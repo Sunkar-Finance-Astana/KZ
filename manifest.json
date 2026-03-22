@@ -1,0 +1,17 @@
+{
+  "name": "Sunkar Finance",
+  "short_name": "Sunkar",
+  "description": "Кредитное сопровождение в Казахстане",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#060D1F",
+  "theme_color": "#060D1F",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    { "src": "img/og.jpg", "sizes": "1200x630", "type": "image/jpeg" }
+  ]
+}

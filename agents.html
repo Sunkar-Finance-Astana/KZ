@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Стать агентом — Sunkar Finance</title>
+  <meta name="description" content="Зарабатывайте на кредитах. Станьте агентом Sunkar Finance и получайте комиссию с каждой сделки.">
+  <meta property="og:title" content="Стать агентом — Sunkar Finance">
+  <meta property="og:description" content="Зарабатывайте на кредитах. Комиссия с каждой сделки. Астана и Алматы.">
+  <meta property="og:image" content="img/og.jpg">
+  <meta name="theme-color" content="#060D1F">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch.png">
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#060D1F; --bg2:#0A1428; --bg3:#0F1C38;
+      --card:rgba(255,255,255,0.04); --card2:rgba(255,255,255,0.07);
+      --green:#00E676; --green2:#00C853; --blue:#2979FF;
+      --gold:#FFD740; --white:#FFFFFF;
+      --gray:rgba(255,255,255,0.55); --gray2:rgba(255,255,255,0.25);
+      --border:rgba(255,255,255,0.08); --radius:20px; --radius-sm:12px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--white); padding-bottom:80px; overflow-x:hidden; }
+
+    .bg-orb { position:fixed; border-radius:50%; filter:blur(80px); opacity:0.08; pointer-events:none; z-index:0; }
+    .orb1 { width:400px; height:400px; background:var(--gold); top:-150px; right:-100px; }
+    .orb2 { width:350px; height:350px; background:var(--green); bottom:-100px; left:-80px; }
+
+    header { position:sticky; top:0; z-index:100; background:rgba(6,13,31,0.92); backdrop-filter:blur(24px); border-bottom:1px solid var(--border); padding:0 16px; height:64px; display:flex; align-items:center; justify-content:space-between; }
+    .header-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-logo img { height:40px; width:40px; object-fit:contain; border-radius:10px; }
+    .logo-text { font-family:'Unbounded',sans-serif; font-size:15px; font-weight:900; background:linear-gradient(135deg,var(--green),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .lang-btn { background:var(--card2); border:1px solid var(--border); color:var(--gray); padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; text-decoration:none; }
+
+    .wrap { position:relative; z-index:1; padding:0 16px; }
+
+    /* HERO */
+    .hero { padding:32px 0 28px; }
+    .hero-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,215,64,0.1); border:1px solid rgba(255,215,64,0.25); padding:6px 14px; border-radius:20px; font-size:12px; font-weight:800; color:var(--gold); margin-bottom:16px; }
+    .badge-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(1.8)} }
+    .hero h1 { font-family:'Unbounded',sans-serif; font-size:clamp(22px,5vw,34px); font-weight:900; line-height:1.2; margin-bottom:14px; }
+    .hero h1 .g { background:linear-gradient(135deg,var(--gold),#FF8F00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero p { font-size:14px; color:var(--gray); line-height:1.6; margin-bottom:24px; }
+    .btn-primary { background:linear-gradient(135deg,var(--gold),#FF8F00); color:#000; padding:14px 24px; border-radius:var(--radius-sm); font-family:'Nunito',sans-serif; font-weight:800; font-size:15px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; border:none; cursor:pointer; box-shadow:0 4px 24px rgba(255,215,64,0.3); }
+
+    /* EARNINGS */
+    .earnings-card { background:linear-gradient(135deg,rgba(255,215,64,0.1),rgba(255,143,0,0.06)); border:1px solid rgba(255,215,64,0.2); border-radius:var(--radius); padding:24px 20px; margin-bottom:20px; text-align:center; }
+    .earnings-label { font-size:13px; color:var(--gray); margin-bottom:8px; font-weight:700; }
+    .earnings-amount { font-family:'Unbounded',sans-serif; font-size:36px; font-weight:900; background:linear-gradient(135deg,var(--gold),#FF8F00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; }
+    .earnings-sub { font-size:12px; color:var(--gray); }
+
+    /* PRODUCTS COMMISSION */
+    .section-title { font-family:'Unbounded',sans-serif; font-size:14px; font-weight:700; margin-bottom:14px; }
+    .commission-list { display:flex; flex-direction:column; gap:8px; margin-bottom:24px; }
+    .commission-item { background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; display:flex; align-items:center; justify-content:space-between; }
+    .commission-left { display:flex; align-items:center; gap:10px; }
+    .commission-icon { font-size:20px; }
+    .commission-name { font-size:13px; font-weight:700; }
+    .commission-sub { font-size:11px; color:var(--gray); }
+    .commission-pct { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:900; background:linear-gradient(135deg,var(--gold),#FF8F00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    /* HOW IT WORKS */
+    .steps { display:flex; flex-direction:column; gap:0; margin-bottom:24px; }
+    .step { display:flex; gap:14px; align-items:flex-start; position:relative; padding-bottom:20px; }
+    .step:last-child { padding-bottom:0; }
+    .step-line { position:absolute; left:19px; top:38px; bottom:0; width:2px; background:var(--border); }
+    .step:last-child .step-line { display:none; }
+    .step-num { width:38px; height:38px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,var(--gold),#FF8F00); display:flex; align-items:center; justify-content:center; font-family:'Unbounded',sans-serif; font-size:13px; font-weight:900; color:#000; position:relative; z-index:1; }
+    .step-title { font-size:14px; font-weight:800; margin-bottom:4px; }
+    .step-sub { font-size:12px; color:var(--gray); line-height:1.5; }
+
+    /* WHY */
+    .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:24px; }
+    .why-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px 14px; }
+    .why-icon { font-size:24px; margin-bottom:8px; }
+    .why-title { font-size:13px; font-weight:800; margin-bottom:4px; }
+    .why-sub { font-size:11px; color:var(--gray); line-height:1.4; }
+
+    /* FORM */
+    .form-card { background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius); padding:24px 20px; margin-bottom:20px; }
+    .form-card-title { font-family:'Unbounded',sans-serif; font-size:15px; font-weight:900; margin-bottom:6px; }
+    .form-card-sub { font-size:13px; color:var(--gray); margin-bottom:20px; }
+    .form-row { margin-bottom:14px; }
+    .form-label { display:block; font-size:12px; font-weight:700; color:var(--gray); margin-bottom:6px; }
+    input, select, textarea { width:100%; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px 14px; color:var(--white); font-family:'Nunito',sans-serif; font-size:15px; font-weight:600; outline:none; transition:border 0.2s; -webkit-appearance:none; }
+    input:focus, select:focus, textarea:focus { border-color:var(--gold); }
+    select option { background:#0d1a35; }
+    textarea { resize:none; height:80px; }
+    .submit-btn { width:100%; padding:15px; border-radius:var(--radius-sm); border:none; cursor:pointer; background:linear-gradient(135deg,var(--gold),#FF8F00); color:#000; font-family:'Unbounded',sans-serif; font-size:14px; font-weight:900; box-shadow:0 4px 24px rgba(255,215,64,0.3); }
+
+    /* BOTTOM NAV */
+    .bottom-nav { position:fixed; bottom:0; left:0; right:0; z-index:200; background:rgba(6,13,31,0.96); backdrop-filter:blur(24px); border-top:1px solid var(--border); display:flex; align-items:stretch; padding-bottom:env(safe-area-inset-bottom); height:64px; }
+    .nav-item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; text-decoration:none; color:rgba(255,255,255,0.25); transition:color 0.2s; padding:8px 4px; cursor:pointer; }
+    .nav-item.active { color:#00E676; }
+    .nav-item svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .nav-label { font-size:10px; font-weight:700; }
+  </style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+
+<header>
+  <a href="index.html" class="header-logo">
+    <img src="img/logo.png" alt="">
+    <span class="logo-text">SUNKAR</span>
+  </a>
+  <a href="agents-kz.html" class="lang-btn">ҚАЗ</a>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-badge"><span class="badge-dot"></span> Открытый набор агентов</div>
+    <h1>Зарабатывайте<br>на <span class="g">кредитах</span></h1>
+    <p>Приводите клиентов — получайте комиссию с каждой сделки. Без опыта, без вложений. Работайте в любое время.</p>
+    <a href="https://wa.me/77052606667?text=Хочу стать агентом Sunkar Finance" class="btn-primary" target="_blank">💬 Стать агентом</a>
+  </div>
+
+  <!-- EARNINGS -->
+  <div class="earnings-card">
+    <div class="earnings-label">Средний заработок агента в месяц</div>
+    <div class="earnings-amount">150 000 ₸</div>
+    <div class="earnings-sub">Топ агенты зарабатывают от 500 000 ₸ в месяц</div>
+  </div>
+
+  <!-- COMMISSION -->
+  <div class="section-title">Комиссия по продуктам</div>
+  <div class="commission-list">
+    <div class="commission-item">
+      <div class="commission-left">
+        <div class="commission-icon">💵</div>
+        <div><div class="commission-name">Кредит без залога</div><div class="commission-sub">до 20 млн ₸</div></div>
+      </div>
+      <div class="commission-pct">1–3%</div>
+    </div>
+    <div class="commission-item">
+      <div class="commission-left">
+        <div class="commission-icon">🏢</div>
+        <div><div class="commission-name">ИП и ТОО</div><div class="commission-sub">до 80 млн ₸</div></div>
+      </div>
+      <div class="commission-pct">1–2%</div>
+    </div>
+    <div class="commission-item">
+      <div class="commission-left">
+        <div class="commission-icon">🏠</div>
+        <div><div class="commission-name">Ипотека</div><div class="commission-sub">до 120 млн ₸</div></div>
+      </div>
+      <div class="commission-pct">0.5–1%</div>
+    </div>
+    <div class="commission-item">
+      <div class="commission-left">
+        <div class="commission-icon">🚗</div>
+        <div><div class="commission-name">Под залог авто</div><div class="commission-sub">до 120 млн ₸</div></div>
+      </div>
+      <div class="commission-pct">1–2%</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-title">Как стать агентом</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">1</div>
+      <div class="step-content"><div class="step-title">Напишите нам</div><div class="step-sub">Пишите в WhatsApp — расскажем все условия и ответим на вопросы.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">2</div>
+      <div class="step-content"><div class="step-title">Приводите клиентов</div><div class="step-sub">Делитесь ссылкой, рассказывайте друзьям, публикуйте в соцсетях.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">3</div>
+      <div class="step-content"><div class="step-title">Клиент получает кредит</div><div class="step-sub">Мы занимаемся всей работой — анализ, подача, одобрение.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">4</div>
+      <div class="step-content"><div class="step-title">Получаете комиссию</div><div class="step-sub">Выплата в день сделки. Всё официально по договору.</div></div>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <div class="section-title">Почему выгодно</div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">💰</div><div class="why-title">Высокая комиссия</div><div class="why-sub">До 3% с каждой сделки. Без потолка.</div></div>
+    <div class="why-card"><div class="why-icon">🕐</div><div class="why-title">Своё время</div><div class="why-sub">Работайте когда удобно. Нет плана.</div></div>
+    <div class="why-card"><div class="why-icon">📱</div><div class="why-title">Только телефон</div><div class="why-sub">Всё через WhatsApp. Никаких офисов.</div></div>
+    <div class="why-card"><div class="why-icon">🎓</div><div class="why-title">Без опыта</div><div class="why-sub">Обучаем всему. Поддержка 24/7.</div></div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div class="form-card-title">Оставьте заявку</div>
+    <div class="form-card-sub">Напишем вам в течение часа</div>
+    <div class="form-row"><label class="form-label">Ваше имя *</label><input type="text" id="agentName" placeholder="Имя и фамилия"></div>
+    <div class="form-row"><label class="form-label">Телефон *</label><input type="tel" id="agentPhone" placeholder="+7 7xx xxx xx xx"></div>
+    <div class="form-row">
+      <label class="form-label">Город</label>
+      <select id="agentCity">
+        <option>Астана</option>
+        <option>Алматы</option>
+        <option>Шымкент</option>
+        <option>Другой город</option>
+      </select>
+    </div>
+    <div class="form-row"><label class="form-label">Откуда узнали о нас?</label><input type="text" id="agentSource" placeholder="WhatsApp, Instagram, знакомые..."></div>
+    <button class="submit-btn" onclick="submitAgent()">🚀 Хочу стать агентом</button>
+  </div>
+
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="nav-label">Главная</span></a>
+  <a href="probability.html" class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span class="nav-label">Калькулятор</span></a>
+  <a href="news.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg><span class="nav-label">Новости</span></a>
+  <a href="agents.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="nav-label">Агентам</span></a>
+  <a href="https://wa.me/77052606667" class="nav-item" target="_blank"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.12 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.72 6.72l1.27-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="nav-label">Связаться</span></a>
+</nav>
+
+<script>
+function submitAgent() {
+  var name = document.getElementById('agentName').value.trim();
+  var phone = document.getElementById('agentPhone').value.trim();
+  var city = document.getElementById('agentCity').value;
+  var source = document.getElementById('agentSource').value.trim();
+  if (!name || !phone) { alert('Заполните имя и телефон'); return; }
+  var msg = encodeURIComponent('Хочу стать агентом!\nИмя: ' + name + '\nТелефон: ' + phone + '\nГород: ' + city + '\nОткуда узнал: ' + (source || 'не указано'));
+  window.open('https://wa.me/77052606667?text=' + msg, '_blank');
+}
+</script>
+</body>
+</html>

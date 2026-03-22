@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sunkar Finance — Кредитное сопровождение</title>
+  <meta name="description" content="Кредиты до 120 млн ₸. Ипотека. Для ИП и ТОО. Астана и Алматы.">
+  <meta property="og:title" content="Sunkar Finance">
+  <meta property="og:description" content="Профессиональное кредитное сопровождение в Казахстане">
+  <meta property="og:image" content="img/og.jpg">
+  <meta name="theme-color" content="#060D1F">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sunkar Finance">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch.png">
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060D1F;
+      --bg2: #0A1428;
+      --bg3: #0F1C38;
+      --card: rgba(255,255,255,0.04);
+      --card2: rgba(255,255,255,0.07);
+      --green: #00E676;
+      --green2: #00C853;
+      --blue: #2979FF;
+      --gold: #FFD740;
+      --red: #FF5252;
+      --white: #FFFFFF;
+      --gray: rgba(255,255,255,0.55);
+      --gray2: rgba(255,255,255,0.25);
+      --border: rgba(255,255,255,0.08);
+      --radius: 20px;
+      --radius-sm: 12px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Nunito',sans-serif;
+      background:var(--bg);
+      color:var(--white);
+      overflow-x:hidden;
+      padding-bottom:80px;
+    }
+    body.splash-active { overflow:hidden; }
+
+    /* ===== SPLASH ===== */
+    #splash {
+      position:fixed; inset:0; z-index:9999;
+      background:var(--bg);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      transition:opacity 0.6s ease, transform 0.6s ease;
+    }
+    #splash.hide { opacity:0; transform:scale(1.05); pointer-events:none; }
+    .splash-logo {
+      width:120px; height:120px; object-fit:contain;
+      animation:splashPulse 1.5s ease infinite;
+      filter:drop-shadow(0 0 30px rgba(0,230,118,0.4));
+    }
+    .splash-name {
+      font-family:'Unbounded',sans-serif;
+      font-size:24px; font-weight:900;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      margin-top:20px; letter-spacing:1px;
+    }
+    .splash-sub { color:var(--gray); font-size:13px; margin-top:6px; }
+    .splash-bar {
+      width:160px; height:3px; background:rgba(255,255,255,0.1);
+      border-radius:10px; margin-top:40px; overflow:hidden;
+    }
+    .splash-bar-fill {
+      height:100%; width:0%; background:linear-gradient(90deg,var(--green),var(--blue));
+      border-radius:10px; animation:loadBar 1.8s ease forwards;
+    }
+    @keyframes splashPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+    @keyframes loadBar { 0%{width:0%} 100%{width:100%} }
+
+    /* ===== HEADER ===== */
+    header {
+      position:sticky; top:0; z-index:100;
+      background:rgba(6,13,31,0.92);
+      backdrop-filter:blur(24px);
+      -webkit-backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--border);
+      padding:0 16px;
+      height:64px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .header-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-logo img { height:40px; width:40px; object-fit:contain; border-radius:10px; }
+    .header-logo-text { font-family:'Unbounded',sans-serif; font-size:15px; font-weight:900;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-right { display:flex; align-items:center; gap:8px; }
+    .lang-btn {
+      background:var(--card2); border:1px solid var(--border);
+      color:var(--gray); padding:6px 12px; border-radius:20px;
+      font-family:'Nunito',sans-serif; font-size:12px; font-weight:700;
+      cursor:pointer; text-decoration:none; transition:all 0.2s;
+    }
+    .lang-btn:hover { color:var(--green); border-color:rgba(0,230,118,0.3); }
+    .wa-header-btn {
+      background:linear-gradient(135deg,#25D366,#128C7E);
+      color:#fff; padding:8px 14px; border-radius:20px;
+      font-size:12px; font-weight:700; text-decoration:none;
+      display:flex; align-items:center; gap:5px;
+    }
+
+    /* ===== CURRENCY TICKER ===== */
+    .ticker-wrap {
+      background:var(--bg2);
+      border-bottom:1px solid var(--border);
+      overflow:hidden; height:36px;
+      display:flex; align-items:center;
+    }
+    .ticker {
+      display:flex; gap:32px;
+      animation:tickerScroll 20s linear infinite;
+      white-space:nowrap; padding:0 20px;
+    }
+    .ticker-item { display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; }
+    .ticker-label { color:var(--gray); }
+    .ticker-value { color:var(--white); }
+    .ticker-change { font-size:11px; }
+    .up { color:var(--green); }
+    .down { color:var(--red); }
+    @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding:32px 16px 24px;
+      position:relative; overflow:hidden;
+    }
+    .hero-glow {
+      position:absolute; top:-60px; right:-60px;
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle,rgba(0,230,118,0.12) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .hero-glow2 {
+      position:absolute; bottom:-80px; left:-40px;
+      width:250px; height:250px; border-radius:50%;
+      background:radial-gradient(circle,rgba(41,121,255,0.1) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(0,230,118,0.1); border:1px solid rgba(0,230,118,0.25);
+      padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700;
+      color:var(--green); margin-bottom:16px;
+    }
+    .hero-badge-dot { width:6px; height:6px; border-radius:50%;
+      background:var(--green); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }
+    .hero h1 {
+      font-family:'Unbounded',sans-serif;
+      font-size:clamp(22px,5vw,36px);
+      font-weight:900; line-height:1.2;
+      letter-spacing:-0.5px; margin-bottom:14px;
+    }
+    .hero h1 .g { background:linear-gradient(135deg,var(--green),#00BFA5);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-sub { font-size:14px; color:var(--gray); line-height:1.6; margin-bottom:24px; max-width:340px; }
+    .hero-btns { display:flex; gap:10px; flex-wrap:wrap; }
+    .btn-primary {
+      background:linear-gradient(135deg,var(--green),var(--green2));
+      color:#000; padding:13px 22px; border-radius:var(--radius-sm);
+      font-family:'Nunito',sans-serif; font-weight:800; font-size:14px;
+      text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+      border:none; cursor:pointer; transition:transform 0.15s,box-shadow 0.15s;
+      box-shadow:0 4px 20px rgba(0,230,118,0.3);
+    }
+    .btn-primary:active { transform:scale(0.97); }
+    .btn-secondary {
+      background:var(--card2); border:1px solid var(--border);
+      color:var(--white); padding:13px 22px; border-radius:var(--radius-sm);
+      font-family:'Nunito',sans-serif; font-weight:700; font-size:14px;
+      text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+      transition:all 0.2s;
+    }
+    .btn-secondary:active { transform:scale(0.97); }
+
+    /* ===== STATS ===== */
+    .stats-row {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:10px; padding:0 16px 24px;
+    }
+    .stat-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius-sm); padding:14px 12px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .stat-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--green),var(--blue));
+    }
+    .stat-num {
+      font-family:'Unbounded',sans-serif;
+      font-size:18px; font-weight:900;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .stat-label { font-size:10px; color:var(--gray); margin-top:4px; font-weight:600; line-height:1.3; }
+
+    /* ===== SECTION ===== */
+    .section { padding:0 16px 28px; }
+    .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .section-title { font-family:'Unbounded',sans-serif; font-size:14px; font-weight:700; }
+    .section-link { font-size:12px; color:var(--green); font-weight:700; text-decoration:none; }
+
+    /* ===== PRODUCT CARDS ===== */
+    .products-scroll {
+      display:flex; gap:12px;
+      overflow-x:auto; padding-bottom:8px;
+      scrollbar-width:none; -ms-overflow-style:none;
+    }
+    .products-scroll::-webkit-scrollbar { display:none; }
+    .product-card {
+      min-width:200px; background:var(--bg3);
+      border:1px solid var(--border); border-radius:var(--radius);
+      padding:18px 16px; position:relative; overflow:hidden;
+      cursor:pointer; transition:transform 0.2s;
+      text-decoration:none; color:var(--white);
+      flex-shrink:0;
+    }
+    .product-card:active { transform:scale(0.97); }
+    .product-card-icon {
+      width:44px; height:44px; border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px; margin-bottom:12px;
+    }
+    .product-card-title { font-size:13px; font-weight:800; margin-bottom:6px; line-height:1.3; }
+    .product-card-amount {
+      font-family:'Unbounded',sans-serif;
+      font-size:16px; font-weight:900;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .product-card-sub { font-size:11px; color:var(--gray); margin-top:3px; }
+    .product-card-glow {
+      position:absolute; top:-20px; right:-20px;
+      width:80px; height:80px; border-radius:50%;
+      opacity:0.15;
+    }
+    .green-card .product-card-icon { background:rgba(0,230,118,0.12); }
+    .green-card .product-card-glow { background:var(--green); }
+    .blue-card .product-card-icon { background:rgba(41,121,255,0.12); }
+    .blue-card .product-card-glow { background:var(--blue); }
+    .gold-card .product-card-icon { background:rgba(255,215,64,0.12); }
+    .gold-card .product-card-glow { background:var(--gold); }
+    .purple-card .product-card-icon { background:rgba(179,136,255,0.12); }
+    .purple-card .product-card-glow { background:#B388FF; }
+
+    /* ===== HOW IT WORKS ===== */
+    .steps { display:flex; flex-direction:column; gap:0; }
+    .step {
+      display:flex; gap:14px; align-items:flex-start;
+      position:relative; padding-bottom:20px;
+    }
+    .step:last-child { padding-bottom:0; }
+    .step-line {
+      position:absolute; left:19px; top:38px; bottom:0;
+      width:2px; background:var(--border);
+    }
+    .step:last-child .step-line { display:none; }
+    .step-num {
+      width:38px; height:38px; border-radius:50%; flex-shrink:0;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Unbounded',sans-serif; font-size:13px; font-weight:900;
+      color:#000; position:relative; z-index:1;
+    }
+    .step-content { flex:1; padding-top:6px; }
+    .step-title { font-size:14px; font-weight:800; margin-bottom:4px; }
+    .step-sub { font-size:12px; color:var(--gray); line-height:1.5; }
+
+    /* ===== WHY US ===== */
+    .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .why-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius-sm); padding:16px 14px;
+    }
+    .why-icon { font-size:24px; margin-bottom:8px; }
+    .why-title { font-size:13px; font-weight:800; margin-bottom:4px; }
+    .why-sub { font-size:11px; color:var(--gray); line-height:1.4; }
+
+    /* ===== NEWS CARDS ===== */
+    .news-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius-sm); padding:16px;
+      margin-bottom:10px; text-decoration:none; color:var(--white);
+      display:block; transition:background 0.2s;
+    }
+    .news-card:active { background:var(--card2); }
+    .news-tag {
+      display:inline-block; background:rgba(0,230,118,0.12);
+      color:var(--green); padding:3px 10px; border-radius:20px;
+      font-size:11px; font-weight:700; margin-bottom:8px;
+    }
+    .news-title { font-size:14px; font-weight:700; line-height:1.4; margin-bottom:6px; }
+    .news-date { font-size:11px; color:var(--gray); }
+
+    /* ===== CITIES ===== */
+    .cities-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .city-card {
+      background:var(--bg3); border:1px solid var(--border);
+      border-radius:var(--radius-sm); padding:16px;
+    }
+    .city-name { font-size:14px; font-weight:800; margin-bottom:8px; }
+    .city-addr { font-size:12px; color:var(--gray); line-height:1.5; margin-bottom:10px; }
+    .city-phone { font-size:13px; color:var(--green); font-weight:700; text-decoration:none; }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      margin:0 16px 28px;
+      background:linear-gradient(135deg,rgba(0,230,118,0.12),rgba(41,121,255,0.12));
+      border:1px solid rgba(0,230,118,0.2);
+      border-radius:var(--radius); padding:24px 20px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .cta-banner h3 {
+      font-family:'Unbounded',sans-serif;
+      font-size:16px; font-weight:900; margin-bottom:8px;
+    }
+    .cta-banner p { font-size:13px; color:var(--gray); margin-bottom:20px; line-height:1.5; }
+    .cta-warn {
+      font-size:11px; color:var(--gray2);
+      margin-top:12px;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position:fixed; bottom:0; left:0; right:0; z-index:200;
+      background:rgba(6,13,31,0.96);
+      backdrop-filter:blur(24px);
+      -webkit-backdrop-filter:blur(24px);
+      border-top:1px solid var(--border);
+      display:flex; align-items:stretch;
+      padding-bottom:env(safe-area-inset-bottom);
+      height:64px;
+    }
+    .nav-item {
+      flex:1; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:3px; text-decoration:none;
+      color:var(--gray2); transition:color 0.2s;
+      padding:8px 4px; cursor:pointer;
+    }
+    .nav-item.active { color:var(--green); }
+    .nav-item svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .nav-label { font-size:10px; font-weight:700; }
+
+    /* ===== PWA INSTALL ===== */
+    #pwaInstall {
+      display:none; position:fixed; bottom:72px; left:12px; right:12px;
+      background:var(--bg3); border:1px solid rgba(0,230,118,0.3);
+      border-radius:var(--radius); padding:14px 16px;
+      z-index:300; box-shadow:0 8px 40px rgba(0,0,0,0.6);
+      animation:slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .pwa-inner { display:flex; align-items:center; gap:12px; }
+    .pwa-icon { width:48px; height:48px; border-radius:12px; object-fit:cover; flex-shrink:0; }
+    .pwa-text { flex:1; }
+    .pwa-text strong { display:block; font-size:14px; font-weight:800; }
+    .pwa-text span { font-size:12px; color:var(--gray); }
+    .pwa-install-btn {
+      background:var(--green); color:#000; border:none;
+      border-radius:10px; padding:9px 16px;
+      font-family:'Nunito',sans-serif; font-weight:800;
+      font-size:13px; cursor:pointer; white-space:nowrap;
+    }
+    .pwa-close {
+      position:absolute; top:10px; right:12px;
+      background:none; border:none; color:var(--gray);
+      font-size:18px; cursor:pointer; line-height:1;
+    }
+
+    /* ===== PARTNERS ===== */
+    .partners-row {
+      display:flex; gap:10px; overflow-x:auto;
+      scrollbar-width:none; padding-bottom:4px;
+    }
+    .partners-row::-webkit-scrollbar { display:none; }
+    .partner-badge {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:10px; padding:8px 16px;
+      font-size:12px; font-weight:700; color:var(--gray);
+      white-space:nowrap; flex-shrink:0;
+    }
+
+    /* ===== FADE IN ===== */
+    .fade { opacity:0; transform:translateY(16px); transition:opacity 0.5s ease,transform 0.5s ease; }
+    .fade.visible { opacity:1; transform:translateY(0); }
+
+    /* ===== DIVIDER ===== */
+    .divider { height:1px; background:var(--border); margin:0 16px 28px; }
+  </style>
+</head>
+<body class="splash-active">
+
+<!-- SPLASH -->
+<div id="splash">
+  <img src="img/logo-full.png" class="splash-logo" alt="Sunkar">
+  
+  
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="header-logo">
+    <img src="img/logo.png" alt="Sunkar">
+    <span class="header-logo-text">SUNKAR</span>
+  </a>
+  <div class="header-right">
+    <a href="kz.html" class="lang-btn">ҚАЗ</a>
+    <a href="https://wa.me/77052606667" class="wa-header-btn" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Написать
+    </a>
+  </div>
+</header>
+
+<!-- CURRENCY TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <div class="ticker-item"><span class="ticker-label">USD/KZT</span><span class="ticker-value" id="usd">—</span><span class="ticker-change up" id="usd-ch"></span></div>
+    <div class="ticker-item"><span class="ticker-label">EUR/KZT</span><span class="ticker-value" id="eur">—</span><span class="ticker-change" id="eur-ch"></span></div>
+    <div class="ticker-item"><span class="ticker-label">RUB/KZT</span><span class="ticker-value" id="rub">—</span><span class="ticker-change" id="rub-ch"></span></div>
+    <div class="ticker-item"><span class="ticker-label">Ставка КБ</span><span class="ticker-value">15.25%</span></div>
+    <div class="ticker-item"><span class="ticker-label">USD/KZT</span><span class="ticker-value" id="usd2">—</span></div>
+    <div class="ticker-item"><span class="ticker-label">EUR/KZT</span><span class="ticker-value" id="eur2">—</span></div>
+    <div class="ticker-item"><span class="ticker-label">RUB/KZT</span><span class="ticker-value" id="rub2">—</span></div>
+    <div class="ticker-item"><span class="ticker-label">Ставка КБ</span><span class="ticker-value">15.25%</span></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero fade">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span> Работаем по всему Казахстану</div>
+  <h1>Кредиты<br>без лишних<br><span class="g">отказов</span></h1>
+  <p class="hero-sub">Анализируем вашу историю и подбираем правильный банк. Оплата только после результата.</p>
+  <div class="hero-btns">
+    <a href="probability.html" class="btn-primary">⚡ Узнать вероятность</a>
+    <a href="https://wa.me/77052606667" class="btn-secondary" target="_blank">Консультация</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row fade">
+  <div class="stat-card">
+    <div class="stat-num" data-count="1200">0</div>
+    <div class="stat-label">Клиентов получили кредит</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" data-count="87">0</div>
+    <div class="stat-label">% одобрений у наших клиентов</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">5+</div>
+    <div class="stat-label">Лет на рынке Казахстана</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="section fade">
+  <div class="section-header">
+    <span class="section-title">Наши продукты</span>
+  </div>
+  <div class="products-scroll">
+    <a href="probability.html" class="product-card green-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">💵</div>
+      <div class="product-card-title">Без залога</div>
+      <div class="product-card-amount">до 20 млн</div>
+      <div class="product-card-sub">Физ. лица · Быстро</div>
+    </a>
+    <a href="probability.html" class="product-card blue-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">🏢</div>
+      <div class="product-card-title">Для ИП и ТОО</div>
+      <div class="product-card-amount">до 80 млн</div>
+      <div class="product-card-sub">Бизнес · Без лишних бумаг</div>
+    </a>
+    <a href="probability.html" class="product-card gold-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">🏠</div>
+      <div class="product-card-title">Ипотека</div>
+      <div class="product-card-amount">до 120 млн</div>
+      <div class="product-card-sub">Полное сопровождение</div>
+    </a>
+    <a href="probability.html" class="product-card purple-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">🚗</div>
+      <div class="product-card-title">Под залог авто</div>
+      <div class="product-card-amount">до 120 млн</div>
+      <div class="product-card-sub">С правом вождения</div>
+    </a>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section fade">
+  <div class="section-header">
+    <span class="section-title">Как мы работаем</span>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Отправьте кредитный отчёт</div>
+        <div class="step-sub">Выгрузите через ЕГОВ → Сервисы → ГКБ. Это бесплатно и занимает 2 минуты.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Анализируем вашу историю</div>
+        <div class="step-sub">Смотрим причины прошлых отказов, нагрузку, количество заявок за 30 дней.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Подбираем стратегию</div>
+        <div class="step-sub">Выбираем правильный банк и правильный способ подачи именно для вас.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Получаете деньги</div>
+        <div class="step-sub">Оплата только после того как вы получили кредит. Всё официально по договору.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<div class="section fade">
+  <div class="section-header">
+    <span class="section-title">Почему Sunkar Finance</span>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🎯</div>
+      <div class="why-title">Точный анализ</div>
+      <div class="why-sub">Видим причины отказов и исправляем их до подачи</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🤝</div>
+      <div class="why-title">Без предоплаты</div>
+      <div class="why-sub">Платите только когда держите деньги в руках</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🏦</div>
+      <div class="why-title">Все банки КЗ</div>
+      <div class="why-sub">Работаем со всеми банками Казахстана</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📋</div>
+      <div class="why-title">Официально</div>
+      <div class="why-sub">Договор на каждую сделку. Всё прозрачно</div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS -->
+<div class="section fade">
+  <div class="section-header">
+    <span class="section-title">Новости</span>
+    <a href="news.html" class="section-link">Все →</a>
+  </div>
+  <a href="news.html" class="news-card">
+    <span class="news-tag">⚠️ Важно</span>
+    <div class="news-title">С 19 марта изменились правила — просрочка от 30 дней ведёт к отказу</div>
+    <div class="news-date">19 марта 2026</div>
+  </a>
+  <a href="news.html" class="news-card">
+    <span class="news-tag">💰 Продукты</span>
+    <div class="news-title">Новые условия: кредиты для ИП до 15 млн без залога и ТОО до 80 млн</div>
+    <div class="news-date">15 марта 2026</div>
+  </a>
+</div>
+
+<!-- CITIES -->
+<div class="section fade">
+  <div class="section-header">
+    <span class="section-title">Наши офисы</span>
+  </div>
+  <div class="cities-grid">
+    <div class="city-card">
+      <div class="city-name">🏙️ Астана</div>
+      <div class="city-addr">Абая 18, БЦ Шахар, каб. 102</div>
+      <div class="city-addr">Иманова 34 (ипотека)</div>
+      <a href="tel:+77052606667" class="city-phone">+7 705 260 66 67</a>
+    </div>
+    <div class="city-card">
+      <div class="city-name">🌆 Алматы</div>
+      <div class="city-addr">Мамыр 3 мкр, 3а</div>
+      <br>
+      <a href="tel:+77052606667" class="city-phone">+7 705 260 66 67</a>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNERS -->
+<div class="section fade">
+  <div class="section-header">
+    <span class="section-title">Партнёры</span>
+  </div>
+  <div class="partners-row">
+    <div class="partner-badge">🚗 JetCar</div>
+    <div class="partner-badge">💼 Dossym</div>
+    <div class="partner-badge">💳 Solva</div>
+    <div class="partner-badge">🏦 Все банки РК</div>
+  </div>
+</div>
+
+
+<!-- BANKS -->
+<div class="section fade">
+  <div class="section-title">Работаем со всеми банками Казахстана</div>
+  <div class="banks-wrap">
+    <span class="bank-tag">Kaspi Bank</span>
+    <span class="bank-tag">Halyk Bank</span>
+    <span class="bank-tag">Forte Bank</span>
+    <span class="bank-tag">Home Credit</span>
+    <span class="bank-tag">Freedom Finance</span>
+    <span class="bank-tag">Jusan Bank</span>
+    <span class="bank-tag">Bereke Bank</span>
+    <span class="bank-tag">Bank RBK</span>
+    <span class="bank-tag">Евразийский</span>
+    <span class="bank-tag">и другие</span>
+  </div>
+</div>
+
+<!-- OFFICIAL PARTNERS -->
+<div class="section fade">
+  <div class="section-title">Официальные партнёры</div>
+  <div class="partners-official">
+    <div class="partner-official-card">
+      <div class="partner-official-logo" style="background:#2CBF6C;">
+        <span class="partner-official-name">JetCar</span>
+      </div>
+      <div class="partner-official-label">Автокредитование</div>
+    </div>
+    <div class="partner-official-card">
+      <div class="partner-official-logo" style="background:#FF1744;">
+        <span class="partner-official-name">Dossym</span>
+      </div>
+      <div class="partner-official-label">Финансовый партнёр</div>
+    </div>
+    <div class="partner-official-card">
+      <div class="partner-official-logo" style="background:#ffffff;">
+        <span class="partner-official-name" style="color:#1A1A2E;">Solva</span>
+      </div>
+      <div class="partner-official-label">МФО партнёр</div>
+    </div>
+  </div>
+</div>
+
+<!-- CITIES -->
+<div class="section fade">
+  <div class="section-title">Филиалы по Казахстану</div>
+  <div class="cities-list">
+    <div class="city-item main-city">
+      <div class="city-item-name">📍 Астана</div>
+      <div class="city-item-addr">Абая 18, БЦ Шахар, каб. 102<br>Иманова 34 (ипотека и юр. лица)</div>
+      <a href="tel:+77052606667" class="city-item-phone">+7 705 260 66 67</a>
+    </div>
+    <div class="city-item">
+      <div class="city-item-name">🌆 Алматы</div>
+      <div class="city-item-addr">Мамыр 3 мкр, 3а</div>
+      <a href="tel:+77052606667" class="city-item-phone">+7 705 260 66 67</a>
+    </div>
+  </div>
+  <div class="cities-tags">
+    <span class="city-tag-sm">Шымкент</span>
+    <span class="city-tag-sm">Актобе</span>
+    <span class="city-tag-sm">Актау</span>
+    <span class="city-tag-sm">Атырау</span>
+    <span class="city-tag-sm">Кызылорда</span>
+    <span class="city-tag-sm">Тараз</span>
+    <span class="city-tag-sm">Семей</span>
+    <span class="city-tag-sm">Павлодар</span>
+  </div>
+</div>
+
+<!-- SOCIAL CONTACTS -->
+<div class="section fade">
+  <div class="section-title">Свяжитесь с нами</div>
+  <div class="social-grid">
+    <a href="https://wa.me/77052606667" class="social-card wa-card" target="_blank">
+      <div class="social-icon">
+        <svg viewBox="0 0 24 24" fill="#25D366" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <div class="social-info">
+        <div class="social-name">WhatsApp</div>
+        <div class="social-handle">+7 705 260 66 67</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+    <a href="https://www.instagram.com/sunkar.finance.astana" class="social-card ig-card" target="_blank">
+      <div class="social-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32"><defs><radialGradient id="ig2" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><path fill="url(#ig2)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      <div class="social-info">
+        <div class="social-name">Instagram</div>
+        <div class="social-handle">@sunkar.finance.astana</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+    <a href="https://www.tiktok.com/@sunkar.finance.astana" class="social-card tt-card" target="_blank">
+      <div class="social-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32"><path fill="white" d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.28 8.28 0 004.84 1.54V6.78a4.85 4.85 0 01-1.07-.09z"/></svg>
+      </div>
+      <div class="social-info">
+        <div class="social-name">TikTok</div>
+        <div class="social-handle">@sunkar.finance.astana</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+    <a href="https://2gis.kz/astana/search/Sunkar%20Finance" class="social-card gis-card" target="_blank">
+      <div class="social-icon gis-icon">2ГИС</div>
+      <div class="social-info">
+        <div class="social-name">2ГИС</div>
+        <div class="social-handle">Абая 18, БЦ Шахар</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner fade">
+  <h3>Готовы помочь прямо сейчас</h3>
+  <p>Отправьте кредитный отчёт — скажем честно есть шанс или нет. Бесплатно и без обязательств.</p>
+  <a href="https://wa.me/77052606667" class="btn-primary" style="display:inline-flex;justify-content:center;" target="_blank">💬 Написать в WhatsApp</a>
+  <div class="cta-warn">⚠️ Главное условие — без действующих просрочек</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item active">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="nav-label">Главная</span>
+  </a>
+  <a href="probability.html" class="nav-item">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span class="nav-label">Калькулятор</span>
+  </a>
+  <a href="news.html" class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+    <span class="nav-label">Новости</span>
+  </a>
+  <a href="agents.html" class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    <span class="nav-label">Агентам</span>
+  </a>
+  <a href="https://wa.me/77052606667" class="nav-item" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.12 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.72 6.72l1.27-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    <span class="nav-label">Связаться</span>
+  </a>
+</nav>
+
+<!-- PWA INSTALL -->
+<div id="pwaInstall">
+  <button class="pwa-close" onclick="document.getElementById('pwaInstall').style.display='none'">✕</button>
+  <div class="pwa-inner">
+    <img src="img/logo.png" class="pwa-icon" alt="">
+    <div class="pwa-text">
+      <strong>Sunkar Finance</strong>
+      <span>Скачать приложение</span>
+    </div>
+    <button class="pwa-install-btn" onclick="installPWA()">Скачать</button>
+  </div>
+</div>
+
+<script>
+// SPLASH
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    document.getElementById('splash').classList.add('hide');
+    document.body.classList.remove('splash-active');
+    setTimeout(function() {
+      document.getElementById('splash').style.display = 'none';
+    }, 700);
+  }, 2000);
+});
+
+// FADE IN
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade').forEach(function(el) { obs.observe(el); });
+
+// COUNT UP
+function countUp(el) {
+  var target = parseInt(el.getAttribute('data-count'));
+  var duration = 1500;
+  var step = target / (duration / 16);
+  var current = 0;
+  var timer = setInterval(function() {
+    current += step;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = Math.round(current) + (target === 87 ? '%' : '+');
+  }, 16);
+}
+var countObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if(e.isIntersecting) { countUp(e.target); countObs.unobserve(e.target); }
+  });
+});
+document.querySelectorAll('[data-count]').forEach(function(el) { countObs.observe(el); });
+
+// CURRENCY (static fallback with realistic values)
+var rates = { usd: '505.40', eur: '549.20', rub: '5.63' };
+document.getElementById('usd').textContent = rates.usd;
+document.getElementById('eur').textContent = rates.eur;
+document.getElementById('rub').textContent = rates.rub;
+document.getElementById('usd2').textContent = rates.usd;
+document.getElementById('eur2').textContent = rates.eur;
+document.getElementById('rub2').textContent = rates.rub;
+document.getElementById('usd-ch').textContent = '▲0.3%';
+document.getElementById('eur-ch').textContent = '▼0.1%';
+document.getElementById('eur-ch').className = 'ticker-change down';
+
+// PWA
+var _pwa;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault(); _pwa = e;
+  setTimeout(function() { document.getElementById('pwaInstall').style.display = 'block'; }, 5000);
+});
+function installPWA() {
+  document.getElementById('pwaInstall').style.display = 'none';
+  if (_pwa) { _pwa.prompt(); _pwa = null; }
+}
+window.addEventListener('appinstalled', function() {
+  document.getElementById('pwaInstall').style.display = 'none';
+});
+</script>
+</body>
+</html>

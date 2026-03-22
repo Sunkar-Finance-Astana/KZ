@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sunkar Finance — Несиелік сүйемелдеу</title>
+  <meta name="description" content="Қазақстан банктерінде несие алуға көмек. 120 млн ₸ дейін.">
+  <meta name="theme-color" content="#060D1F">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sunkar Finance">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch.png">
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#060D1F; --bg2:#0A1428; --bg3:#0F1C38;
+      --card:rgba(255,255,255,0.04); --card2:rgba(255,255,255,0.07);
+      --green:#00E676; --green2:#00C853; --blue:#2979FF;
+      --gold:#FFD740; --red:#FF5252;
+      --white:#FFFFFF; --gray:rgba(255,255,255,0.55); --gray2:rgba(255,255,255,0.25);
+      --border:rgba(255,255,255,0.08); --radius:20px; --radius-sm:12px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--white); overflow-x:hidden; padding-bottom:80px; }
+
+    header { position:sticky; top:0; z-index:100; background:rgba(6,13,31,0.92); backdrop-filter:blur(24px); border-bottom:1px solid var(--border); padding:0 16px; height:64px; display:flex; align-items:center; justify-content:space-between; }
+    .header-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-logo img { height:40px; width:40px; object-fit:contain; border-radius:10px; }
+    .header-logo-text { font-family:'Unbounded',sans-serif; font-size:15px; font-weight:900; background:linear-gradient(135deg,var(--green),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-right { display:flex; align-items:center; gap:8px; }
+    .lang-btn { background:var(--card2); border:1px solid var(--border); color:var(--gray); padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; text-decoration:none; }
+    .wa-header-btn { background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; padding:8px 14px; border-radius:20px; font-size:12px; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:5px; }
+
+    .ticker-wrap { background:var(--bg2); border-bottom:1px solid var(--border); overflow:hidden; height:36px; display:flex; align-items:center; }
+    .ticker { display:flex; gap:32px; animation:tickerScroll 20s linear infinite; white-space:nowrap; padding:0 20px; }
+    .ticker-item { display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; }
+    .ticker-label { color:var(--gray); }
+    .up { color:var(--green); } .down { color:var(--red); }
+    @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }
+
+    .hero { padding:32px 16px 24px; position:relative; overflow:hidden; }
+    .hero-glow { position:absolute; top:-60px; right:-60px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(0,230,118,0.12) 0%,transparent 70%); pointer-events:none; }
+    .hero-glow2 { position:absolute; bottom:-80px; left:-40px; width:250px; height:250px; border-radius:50%; background:radial-gradient(circle,rgba(41,121,255,0.1) 0%,transparent 70%); pointer-events:none; }
+    .hero-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(0,230,118,0.1); border:1px solid rgba(0,230,118,0.25); padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; color:var(--green); margin-bottom:16px; }
+    .hero-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+    .hero h1 { font-family:'Unbounded',sans-serif; font-size:clamp(20px,5vw,34px); font-weight:900; line-height:1.2; letter-spacing:-0.5px; margin-bottom:14px; }
+    .hero h1 .g { background:linear-gradient(135deg,var(--green),#00BFA5); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-sub { font-size:14px; color:var(--gray); line-height:1.6; margin-bottom:24px; max-width:340px; }
+    .hero-btns { display:flex; gap:10px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--green),var(--green2)); color:#000; padding:13px 22px; border-radius:var(--radius-sm); font-family:'Nunito',sans-serif; font-weight:800; font-size:14px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; border:none; cursor:pointer; box-shadow:0 4px 20px rgba(0,230,118,0.3); }
+    .btn-secondary { background:var(--card2); border:1px solid var(--border); color:var(--white); padding:13px 22px; border-radius:var(--radius-sm); font-family:'Nunito',sans-serif; font-weight:700; font-size:14px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+
+    .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:0 16px 24px; }
+    .stat-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 12px; text-align:center; position:relative; overflow:hidden; }
+    .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--green),var(--blue)); }
+    .stat-num { font-family:'Unbounded',sans-serif; font-size:18px; font-weight:900; background:linear-gradient(135deg,var(--green),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .stat-label { font-size:10px; color:var(--gray); margin-top:4px; font-weight:600; line-height:1.3; }
+
+    .section { padding:0 16px 28px; }
+    .section-title { font-family:'Unbounded',sans-serif; font-size:14px; font-weight:700; margin-bottom:14px; }
+
+    .products-scroll { display:flex; gap:12px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none; }
+    .products-scroll::-webkit-scrollbar { display:none; }
+    .product-card { min-width:200px; background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius); padding:18px 16px; position:relative; overflow:hidden; cursor:pointer; text-decoration:none; color:var(--white); flex-shrink:0; }
+    .product-card-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:12px; }
+    .product-card-title { font-size:13px; font-weight:800; margin-bottom:6px; line-height:1.3; }
+    .product-card-amount { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:900; background:linear-gradient(135deg,var(--green),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .product-card-sub { font-size:11px; color:var(--gray); margin-top:3px; }
+    .product-card-glow { position:absolute; top:-20px; right:-20px; width:80px; height:80px; border-radius:50%; opacity:0.15; }
+    .green-card .product-card-icon { background:rgba(0,230,118,0.12); }
+    .green-card .product-card-glow { background:var(--green); }
+    .blue-card .product-card-icon { background:rgba(41,121,255,0.12); }
+    .blue-card .product-card-glow { background:var(--blue); }
+    .gold-card .product-card-icon { background:rgba(255,215,64,0.12); }
+    .gold-card .product-card-glow { background:var(--gold); }
+    .purple-card .product-card-icon { background:rgba(179,136,255,0.12); }
+    .purple-card .product-card-glow { background:#B388FF; }
+
+    .steps { display:flex; flex-direction:column; gap:0; }
+    .step { display:flex; gap:14px; align-items:flex-start; position:relative; padding-bottom:20px; }
+    .step:last-child { padding-bottom:0; }
+    .step-line { position:absolute; left:19px; top:38px; bottom:0; width:2px; background:var(--border); }
+    .step:last-child .step-line { display:none; }
+    .step-num { width:38px; height:38px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,var(--green),var(--blue)); display:flex; align-items:center; justify-content:center; font-family:'Unbounded',sans-serif; font-size:13px; font-weight:900; color:#000; position:relative; z-index:1; }
+    .step-content { flex:1; padding-top:6px; }
+    .step-title { font-size:14px; font-weight:800; margin-bottom:4px; }
+    .step-sub { font-size:12px; color:var(--gray); line-height:1.5; }
+
+    .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .why-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px 14px; }
+    .why-icon { font-size:24px; margin-bottom:8px; }
+    .why-title { font-size:13px; font-weight:800; margin-bottom:4px; }
+    .why-sub { font-size:11px; color:var(--gray); line-height:1.4; }
+
+    .news-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; margin-bottom:10px; text-decoration:none; color:var(--white); display:block; }
+    .news-tag { display:inline-block; background:rgba(0,230,118,0.12); color:var(--green); padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; margin-bottom:8px; }
+    .news-title { font-size:14px; font-weight:700; line-height:1.4; margin-bottom:6px; }
+    .news-date { font-size:11px; color:var(--gray); }
+
+    .cities-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .city-card { background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; }
+    .city-name { font-size:14px; font-weight:800; margin-bottom:8px; }
+    .city-addr { font-size:12px; color:var(--gray); line-height:1.5; margin-bottom:10px; }
+    .city-phone { font-size:13px; color:var(--green); font-weight:700; text-decoration:none; }
+
+    .cta-banner { margin:0 16px 28px; background:linear-gradient(135deg,rgba(0,230,118,0.12),rgba(41,121,255,0.12)); border:1px solid rgba(0,230,118,0.2); border-radius:var(--radius); padding:24px 20px; text-align:center; }
+    .cta-banner h3 { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:900; margin-bottom:8px; }
+    .cta-banner p { font-size:13px; color:var(--gray); margin-bottom:20px; line-height:1.5; }
+    .cta-warn { font-size:11px; color:var(--gray2); margin-top:12px; }
+
+    .partners-row { display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; padding-bottom:4px; }
+    .partners-row::-webkit-scrollbar { display:none; }
+    .partner-badge { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 16px; font-size:12px; font-weight:700; color:var(--gray); white-space:nowrap; flex-shrink:0; }
+
+
+    .banks-wrap { display:flex; flex-wrap:wrap; gap:8px; }
+    .bank-tag { background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; color:var(--gray); }
+    .partners-official { display:flex; gap:12px; }
+    .partner-official-card { flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .partner-official-logo { width:100%; height:64px; border-radius:14px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1); }
+    .partner-official-name { font-size:16px; font-weight:900; letter-spacing:0.5px; color:white; }
+    .partner-official-label { font-size:10px; color:var(--gray); font-weight:700; text-align:center; }
+    .cities-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+    .city-item { background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; }
+    .main-city { border-color:rgba(0,230,118,0.2); }
+    .city-item-name { font-size:14px; font-weight:800; margin-bottom:6px; }
+    .city-item-addr { font-size:11px; color:var(--gray); line-height:1.5; margin-bottom:8px; }
+    .city-item-phone { font-size:12px; color:var(--green); font-weight:700; text-decoration:none; }
+    .cities-tags { display:flex; flex-wrap:wrap; gap:8px; }
+    .city-tag-sm { background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:20px; padding:6px 12px; font-size:11px; font-weight:700; color:var(--gray); }
+    .social-grid { display:flex; flex-direction:column; gap:8px; }
+    .social-card { display:flex; align-items:center; gap:14px; background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; text-decoration:none; color:var(--white); transition:background 0.2s; }
+    .social-card:active { background:rgba(255,255,255,0.07); }
+    .social-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .wa-card .social-icon { background:rgba(37,211,102,0.12); }
+    .ig-card .social-icon { background:rgba(253,84,73,0.12); }
+    .tt-card .social-icon { background:rgba(255,255,255,0.08); }
+    .gis-card .social-icon { background:rgba(41,121,255,0.12); }
+    .gis-icon { font-size:13px; font-weight:900; color:#2979FF; }
+    .social-info { flex:1; }
+    .social-name { font-size:14px; font-weight:800; margin-bottom:2px; }
+    .social-handle { font-size:12px; color:var(--gray); }
+    .social-arrow { font-size:16px; color:var(--gray2); }
+
+    .bottom-nav { position:fixed; bottom:0; left:0; right:0; z-index:200; background:rgba(6,13,31,0.96); backdrop-filter:blur(24px); border-top:1px solid var(--border); display:flex; align-items:stretch; padding-bottom:env(safe-area-inset-bottom); height:64px; }
+    .nav-item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; text-decoration:none; color:rgba(255,255,255,0.25); transition:color 0.2s; padding:8px 4px; cursor:pointer; }
+    .nav-item.active { color:#00E676; }
+    .nav-item svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .nav-label { font-size:10px; font-weight:700; }
+
+    #pwaInstall { display:none; position:fixed; bottom:72px; left:12px; right:12px; background:var(--bg3); border:1px solid rgba(0,230,118,0.3); border-radius:var(--radius); padding:14px 16px; z-index:300; box-shadow:0 8px 40px rgba(0,0,0,0.6); animation:slideUp 0.3s ease; }
+    @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .pwa-inner { display:flex; align-items:center; gap:12px; }
+    .pwa-icon { width:48px; height:48px; border-radius:12px; object-fit:cover; flex-shrink:0; }
+    .pwa-text { flex:1; }
+    .pwa-text strong { display:block; font-size:14px; font-weight:800; }
+    .pwa-text span { font-size:12px; color:var(--gray); }
+    .pwa-install-btn { background:var(--green); color:#000; border:none; border-radius:10px; padding:9px 16px; font-family:'Nunito',sans-serif; font-weight:800; font-size:13px; cursor:pointer; white-space:nowrap; }
+    .pwa-close { position:absolute; top:10px; right:12px; background:none; border:none; color:var(--gray); font-size:18px; cursor:pointer; }
+
+    .fade { opacity:0; transform:translateY(16px); transition:opacity 0.5s ease,transform 0.5s ease; }
+    .fade.visible { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+<header>
+  <a href="kz.html" class="header-logo">
+    <img src="img/logo.png" alt="Sunkar">
+    <span class="header-logo-text">SUNKAR</span>
+  </a>
+  <div class="header-right">
+    <a href="index.html" class="lang-btn">RUS</a>
+    <a href="https://wa.me/77052606667" class="wa-header-btn" target="_blank">Жазу</a>
+  </div>
+</header>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item"><span class="ticker-label">USD/KZT</span><span class="up">505.40 ▲</span></div>
+    <div class="ticker-item"><span class="ticker-label">EUR/KZT</span><span>549.20</span></div>
+    <div class="ticker-item"><span class="ticker-label">RUB/KZT</span><span>5.63</span></div>
+    <div class="ticker-item"><span class="ticker-label">ҰБ мөлшерлемесі</span><span>15.25%</span></div>
+    <div class="ticker-item"><span class="ticker-label">USD/KZT</span><span class="up">505.40 ▲</span></div>
+    <div class="ticker-item"><span class="ticker-label">EUR/KZT</span><span>549.20</span></div>
+    <div class="ticker-item"><span class="ticker-label">RUB/KZT</span><span>5.63</span></div>
+    <div class="ticker-item"><span class="ticker-label">ҰБ мөлшерлемесі</span><span>15.25%</span></div>
+  </div>
+</div>
+
+<div class="hero fade">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span> Бүкіл Қазақстан бойынша жұмыс істейміз</div>
+  <h1>Несие —<br>бас тартусыз<br><span class="g">шешім</span></h1>
+  <p class="hero-sub">Тарихыңызды талдаймыз және дұрыс банкті таңдаймыз. Төлем тек нәтижеден кейін.</p>
+  <div class="hero-btns">
+    <a href="probability-kz.html" class="btn-primary">⚡ Мүмкіндікті білу</a>
+    <a href="https://wa.me/77052606667" class="btn-secondary" target="_blank">Кеңес алу</a>
+  </div>
+</div>
+
+<div class="stats-row fade">
+  <div class="stat-card">
+    <div class="stat-num" data-count="1200">0</div>
+    <div class="stat-label">Клиент несие алды</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" data-count="87">0</div>
+    <div class="stat-label">% мақұлдау</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">5+</div>
+    <div class="stat-label">Жыл нарықта</div>
+  </div>
+</div>
+
+<div class="section fade">
+  <div class="section-title">Біздің өнімдер</div>
+  <div class="products-scroll">
+    <a href="probability-kz.html" class="product-card green-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">💵</div>
+      <div class="product-card-title">Кепілсіз несие</div>
+      <div class="product-card-amount">20 млн дейін</div>
+      <div class="product-card-sub">Жеке тұлғалар · Жылдам</div>
+    </a>
+    <a href="probability-kz.html" class="product-card blue-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">🏢</div>
+      <div class="product-card-title">ИП және ТОО</div>
+      <div class="product-card-amount">80 млн дейін</div>
+      <div class="product-card-sub">Бизнес · Кепілсіз</div>
+    </a>
+    <a href="probability-kz.html" class="product-card gold-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">🏠</div>
+      <div class="product-card-title">Ипотека</div>
+      <div class="product-card-amount">120 млн дейін</div>
+      <div class="product-card-sub">Толық сүйемелдеу</div>
+    </a>
+    <a href="probability-kz.html" class="product-card purple-card">
+      <div class="product-card-glow"></div>
+      <div class="product-card-icon">🚗</div>
+      <div class="product-card-title">Авто кепілімен</div>
+      <div class="product-card-amount">120 млн дейін</div>
+      <div class="product-card-sub">Айдау құқығымен</div>
+    </a>
+  </div>
+</div>
+
+<div class="section fade">
+  <div class="section-title">Қалай жұмыс істейміз</div>
+  <div class="steps">
+    <div class="step"><div class="step-line"></div><div class="step-num">1</div><div class="step-content"><div class="step-title">Несиелік есепті жіберіңіз</div><div class="step-sub">ЕГОВ арқылы жүктеп алыңыз → Қызметтер → ГКБ. Тегін, 2 минут.</div></div></div>
+    <div class="step"><div class="step-line"></div><div class="step-num">2</div><div class="step-content"><div class="step-title">Тарихыңызды талдаймыз</div><div class="step-sub">Бас тарту себептерін, нагрузканы, 30 күндегі өтінімдер санын тексереміз.</div></div></div>
+    <div class="step"><div class="step-line"></div><div class="step-num">3</div><div class="step-content"><div class="step-title">Стратегия таңдаймыз</div><div class="step-sub">Сізге дұрыс банк пен берілу тәсілін таңдаймыз.</div></div></div>
+    <div class="step"><div class="step-line"></div><div class="step-num">4</div><div class="step-content"><div class="step-title">Ақша аласыз</div><div class="step-sub">Төлем тек несие алғаннан кейін. Шарт бойынша ресми.</div></div></div>
+  </div>
+</div>
+
+<div class="section fade">
+  <div class="section-title">Неге Sunkar Finance</div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">🎯</div><div class="why-title">Дәл талдау</div><div class="why-sub">Бас тарту себептерін тапқызып түзетеміз</div></div>
+    <div class="why-card"><div class="why-icon">🤝</div><div class="why-title">Алдын ала төлемсіз</div><div class="why-sub">Ақша қолыңызда болғанда ғана төлейсіз</div></div>
+    <div class="why-card"><div class="why-icon">🏦</div><div class="why-title">ҚР барлық банктері</div><div class="why-sub">Қазақстанның барлық банктерімен жұмыс</div></div>
+    <div class="why-card"><div class="why-icon">📋</div><div class="why-title">Ресми</div><div class="why-sub">Әр мәміле бойынша шарт. Мөлдір.</div></div>
+  </div>
+</div>
+
+<div class="section fade">
+  <div class="section-title">Жаңалықтар</div>
+  <a href="news-kz.html" class="news-card">
+    <span class="news-tag">⚠️ Маңызды</span>
+    <div class="news-title">19 наурыздан бастап ережелер өзгерді — 30 күндік ПРОСРОЧКА бас тартуға әкеледі</div>
+    <div class="news-date">19 наурыз 2026</div>
+  </a>
+  <a href="news-kz.html" class="news-card">
+    <span class="news-tag">💰 Өнімдер</span>
+    <div class="news-title">Жаңа шарттар: ИП үшін 15 млн дейін, ТОО үшін 80 млн дейін кепілсіз</div>
+    <div class="news-date">15 наурыз 2026</div>
+  </a>
+</div>
+
+<div class="section fade">
+  <div class="section-title">Біздің кеңселер</div>
+  <div class="cities-grid">
+    <div class="city-card"><div class="city-name">🏙️ Астана</div><div class="city-addr">Абай 18, Шахар БО, 102 каб.</div><div class="city-addr">Иманов 34 (ипотека)</div><a href="tel:+77052606667" class="city-phone">+7 705 260 66 67</a></div>
+    <div class="city-card"><div class="city-name">🌆 Алматы</div><div class="city-addr">Мамыр 3 мкр, 3а</div><br><a href="tel:+77052606667" class="city-phone">+7 705 260 66 67</a></div>
+  </div>
+</div>
+
+<div class="section fade">
+  <div class="section-title">Серіктестер</div>
+  <div class="partners-row">
+    <div class="partner-badge">🚗 JetCar</div>
+    <div class="partner-badge">💼 Dossym</div>
+    <div class="partner-badge">💳 Solva</div>
+    <div class="partner-badge">🏦 ҚР барлық банктері</div>
+  </div>
+</div>
+
+
+<!-- BANKS -->
+<div class="section fade">
+  <div class="section-title">Қазақстанның барлық банктерімен жұмыс</div>
+  <div class="banks-wrap">
+    <span class="bank-tag">Kaspi Bank</span>
+    <span class="bank-tag">Halyk Bank</span>
+    <span class="bank-tag">Forte Bank</span>
+    <span class="bank-tag">Home Credit</span>
+    <span class="bank-tag">Freedom Finance</span>
+    <span class="bank-tag">Jusan Bank</span>
+    <span class="bank-tag">Bereke Bank</span>
+    <span class="bank-tag">Bank RBK</span>
+    <span class="bank-tag">Евразийский</span>
+    <span class="bank-tag">және басқалар</span>
+  </div>
+</div>
+
+<!-- OFFICIAL PARTNERS -->
+<div class="section fade">
+  <div class="section-title">Ресми серіктестер</div>
+  <div class="partners-official">
+    <div class="partner-official-card">
+      <div class="partner-official-logo" style="background:#2CBF6C;">
+        <span class="partner-official-name">JetCar</span>
+      </div>
+      <div class="partner-official-label">Автонесие</div>
+    </div>
+    <div class="partner-official-card">
+      <div class="partner-official-logo" style="background:#FF1744;">
+        <span class="partner-official-name">Dossym</span>
+      </div>
+      <div class="partner-official-label">Қаржы серіктесі</div>
+    </div>
+    <div class="partner-official-card">
+      <div class="partner-official-logo" style="background:#ffffff;">
+        <span class="partner-official-name" style="color:#1A1A2E;">Solva</span>
+      </div>
+      <div class="partner-official-label">МҚҰ серіктес</div>
+    </div>
+  </div>
+</div>
+
+<!-- CITIES -->
+<div class="section fade">
+  <div class="section-title">Қазақстандағы филиалдар</div>
+  <div class="cities-list">
+    <div class="city-item main-city">
+      <div class="city-item-name">📍 Астана</div>
+      <div class="city-item-addr">Абай 18, Шахар БО, 102 каб.<br>Иманов 34 (ипотека және заңды тұлғалар)</div>
+      <a href="tel:+77052606667" class="city-item-phone">+7 705 260 66 67</a>
+    </div>
+    <div class="city-item">
+      <div class="city-item-name">🌆 Алматы</div>
+      <div class="city-item-addr">Мамыр 3 мкр, 3а</div>
+      <a href="tel:+77052606667" class="city-item-phone">+7 705 260 66 67</a>
+    </div>
+  </div>
+  <div class="cities-tags">
+    <span class="city-tag-sm">Шымкент</span>
+    <span class="city-tag-sm">Ақтөбе</span>
+    <span class="city-tag-sm">Ақтау</span>
+    <span class="city-tag-sm">Атырау</span>
+    <span class="city-tag-sm">Қызылорда</span>
+    <span class="city-tag-sm">Тараз</span>
+    <span class="city-tag-sm">Семей</span>
+    <span class="city-tag-sm">Павлодар</span>
+  </div>
+</div>
+
+<!-- SOCIAL CONTACTS -->
+<div class="section fade">
+  <div class="section-title">Бізбен байланысыңыз</div>
+  <div class="social-grid">
+    <a href="https://wa.me/77052606667" class="social-card wa-card" target="_blank">
+      <div class="social-icon">
+        <svg viewBox="0 0 24 24" fill="#25D366" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <div class="social-info">
+        <div class="social-name">WhatsApp</div>
+        <div class="social-handle">+7 705 260 66 67</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+    <a href="https://www.instagram.com/sunkar.finance.astana" class="social-card ig-card" target="_blank">
+      <div class="social-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32"><defs><radialGradient id="ig3" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><path fill="url(#ig3)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      <div class="social-info">
+        <div class="social-name">Instagram</div>
+        <div class="social-handle">@sunkar.finance.astana</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+    <a href="https://www.tiktok.com/@sunkar.finance.astana" class="social-card tt-card" target="_blank">
+      <div class="social-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32"><path fill="white" d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.28 8.28 0 004.84 1.54V6.78a4.85 4.85 0 01-1.07-.09z"/></svg>
+      </div>
+      <div class="social-info">
+        <div class="social-name">TikTok</div>
+        <div class="social-handle">@sunkar.finance.astana</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+    <a href="https://2gis.kz/astana/search/Sunkar%20Finance" class="social-card gis-card" target="_blank">
+      <div class="social-icon gis-icon">2ГИС</div>
+      <div class="social-info">
+        <div class="social-name">2ГИС</div>
+        <div class="social-handle">Абай 18, Шахар БО</div>
+      </div>
+      <div class="social-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<div class="cta-banner fade">
+  <h3>Қазір көмектесуге дайынбыз</h3>
+  <p>Несиелік есепті жіберіңіз — мүмкіндік бар ма деп шынымен айтамыз. Тегін және міндетсіз.</p>
+  <a href="https://wa.me/77052606667" class="btn-primary" style="display:inline-flex;justify-content:center;" target="_blank">💬 WhatsApp-қа жазу</a>
+  <div class="cta-warn">⚠️ Басты шарт — белсенді ПРОСРОЧКА болмауы керек</div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="kz.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="nav-label">Басты</span></a>
+  <a href="probability-kz.html" class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span class="nav-label">Калькулятор</span></a>
+  <a href="news-kz.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg><span class="nav-label">Жаңалықтар</span></a>
+  <a href="agents-kz.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="nav-label">Агенттер</span></a>
+  <a href="https://wa.me/77052606667" class="nav-item" target="_blank"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.12 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.72 6.72l1.27-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="nav-label">Байланыс</span></a>
+</nav>
+
+<div id="pwaInstall">
+  <button class="pwa-close" onclick="document.getElementById('pwaInstall').style.display='none'">✕</button>
+  <div class="pwa-inner">
+    <img src="img/logo.png" class="pwa-icon" alt="">
+    <div class="pwa-text"><strong>Sunkar Finance</strong><span>Қолданбаны жүктеп алу</span></div>
+    <button class="pwa-install-btn" onclick="installPWA()">Жүктеу</button>
+  </div>
+</div>
+
+<script>
+var obs=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade').forEach(function(el){obs.observe(el);});
+function countUp(el){var t=parseInt(el.getAttribute('data-count'));var s=t/(1500/16);var c=0;var i=setInterval(function(){c+=s;if(c>=t){c=t;clearInterval(i);}el.textContent=Math.round(c)+(t===87?'%':'+');},16);}
+var co=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting){countUp(e.target);co.unobserve(e.target);}});});
+document.querySelectorAll('[data-count]').forEach(function(el){co.observe(el);});
+var _pwa;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_pwa=e;setTimeout(function(){document.getElementById('pwaInstall').style.display='block';},5000);});
+function installPWA(){document.getElementById('pwaInstall').style.display='none';if(_pwa){_pwa.prompt();_pwa=null;}}
+</script>
+</body>
+</html>

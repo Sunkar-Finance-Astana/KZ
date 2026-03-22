@@ -28,8 +28,8 @@
 
     header { position:sticky; top:0; z-index:100; background:rgba(6,13,31,0.92); backdrop-filter:blur(24px); border-bottom:1px solid var(--border); padding:0 16px; height:64px; display:flex; align-items:center; justify-content:space-between; }
     .header-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .header-logo img { height:40px; width:40px; object-fit:contain; border-radius:10px; }
-    .header-logo-text { font-family:'Unbounded',sans-serif; font-size:15px; font-weight:900; background:linear-gradient(135deg,var(--green),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-logo img { height:56px; width:56px; object-fit:contain; border-radius:10px; }
+    .header-logo-text { font-family:'Unbounded',sans-serif; font-size:13px; font-weight:900; background:linear-gradient(135deg,var(--green),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .header-right { display:flex; align-items:center; gap:8px; }
     .lang-btn { background:var(--card2); border:1px solid var(--border); color:var(--gray); padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; text-decoration:none; }
     .wa-header-btn { background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; padding:8px 14px; border-radius:20px; font-size:12px; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:5px; }
@@ -164,13 +164,49 @@
 
     .fade { opacity:0; transform:translateY(16px); transition:opacity 0.5s ease,transform 0.5s ease; }
     .fade.visible { opacity:1; transform:translateY(0); }
+
+    /* PARTNERS */
+    .partners-official { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .partner-card { display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; }
+    .partner-logo-wrap { width:100%; height:68px; border-radius:14px; display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid rgba(255,255,255,0.1); }
+    .partner-logo-img { width:90%; height:90%; object-fit:contain; }
+    .partner-name { font-size:13px; font-weight:800; color:#fff; }
+    .partner-desc { font-size:10px; color:rgba(255,255,255,0.5); font-weight:700; text-align:center; }
+
+    /* BANKS */
+    .banks-wrap { display:flex; flex-wrap:wrap; gap:8px; }
+    .bank-tag { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:8px 14px; font-size:12px; font-weight:700; color:rgba(255,255,255,0.7); white-space:nowrap; }
+
+    /* CITIES */
+    .cities-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+    .city-item { background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; }
+    .main-city { border-color:rgba(0,230,118,0.25); }
+    .city-item-name { font-size:14px; font-weight:800; margin-bottom:6px; }
+    .city-item-addr { font-size:11px; color:var(--gray); line-height:1.5; margin-bottom:8px; }
+    .city-item-phone { font-size:12px; color:var(--green); font-weight:700; text-decoration:none; display:block; }
+    .cities-tags { display:flex; flex-wrap:wrap; gap:8px; }
+    .city-tag-sm { background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:20px; padding:6px 12px; font-size:11px; font-weight:700; color:var(--gray); }
+
+    /* SOCIAL CONTACTS */
+    .social-grid { display:flex; flex-direction:column; gap:8px; }
+    .social-card { display:flex; align-items:center; gap:14px; background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; text-decoration:none; color:var(--white); }
+    .social-icon { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .wa-icon { background:rgba(37,211,102,0.12); }
+    .ig-icon { background:rgba(253,84,73,0.1); }
+    .tt-icon { background:rgba(255,255,255,0.06); }
+    .gis-icon-wrap { background:rgba(255,255,255,0.06); border-radius:14px; width:52px; height:52px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .social-info { flex:1; }
+    .social-name { font-size:14px; font-weight:800; margin-bottom:2px; }
+    .social-handle { font-size:12px; color:var(--gray); }
+    .social-arr { font-size:16px; color:rgba(255,255,255,0.2); }
+
   </style>
 </head>
 <body>
 <header>
   <a href="kz.html" class="header-logo">
     <img src="img/logo.png" alt="Sunkar">
-    <span class="header-logo-text">SUNKAR</span>
+    <span class="header-logo-text">SUNKAR FINANCE</span>
   </a>
   <div class="header-right">
     <a href="index.html" class="lang-btn">RUS</a>
@@ -223,28 +259,28 @@
   <div class="products-scroll">
     <a href="probability-kz.html" class="product-card green-card">
       <div class="product-card-glow"></div>
-      <div class="product-card-icon">💵</div>
+      <div class="product-card-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#00E676" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg></div>
       <div class="product-card-title">Кепілсіз несие</div>
       <div class="product-card-amount">20 млн дейін</div>
       <div class="product-card-sub">Жеке тұлғалар · Жылдам</div>
     </a>
     <a href="probability-kz.html" class="product-card blue-card">
       <div class="product-card-glow"></div>
-      <div class="product-card-icon">🏢</div>
+      <div class="product-card-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2979FF" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M9 9h1m4 0h1M9 13h1m4 0h1"/></svg></div>
       <div class="product-card-title">ИП және ТОО</div>
       <div class="product-card-amount">80 млн дейін</div>
       <div class="product-card-sub">Бизнес · Кепілсіз</div>
     </a>
     <a href="probability-kz.html" class="product-card gold-card">
       <div class="product-card-glow"></div>
-      <div class="product-card-icon">🏠</div>
+      <div class="product-card-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#FFD740" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       <div class="product-card-title">Ипотека</div>
       <div class="product-card-amount">120 млн дейін</div>
       <div class="product-card-sub">Толық сүйемелдеу</div>
     </a>
     <a href="probability-kz.html" class="product-card purple-card">
       <div class="product-card-glow"></div>
-      <div class="product-card-icon">🚗</div>
+      <div class="product-card-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#B388FF" stroke-width="1.5"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h1l2-3h10l2 3h1a2 2 0 012 2v6a2 2 0 01-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg></div>
       <div class="product-card-title">Авто кепілімен</div>
       <div class="product-card-amount">120 млн дейін</div>
       <div class="product-card-sub">Айдау құқығымен</div>
@@ -265,10 +301,10 @@
 <div class="section fade">
   <div class="section-title">Неге Sunkar Finance</div>
   <div class="why-grid">
-    <div class="why-card"><div class="why-icon">🎯</div><div class="why-title">Дәл талдау</div><div class="why-sub">Бас тарту себептерін тапқызып түзетеміз</div></div>
-    <div class="why-card"><div class="why-icon">🤝</div><div class="why-title">Алдын ала төлемсіз</div><div class="why-sub">Ақша қолыңызда болғанда ғана төлейсіз</div></div>
-    <div class="why-card"><div class="why-icon">🏦</div><div class="why-title">ҚР барлық банктері</div><div class="why-sub">Қазақстанның барлық банктерімен жұмыс</div></div>
-    <div class="why-card"><div class="why-icon">📋</div><div class="why-title">Ресми</div><div class="why-sub">Әр мәміле бойынша шарт. Мөлдір.</div></div>
+    <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00E676" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="why-title">Дәл талдау</div><div class="why-sub">Бас тарту себептерін тапқызып түзетеміз</div></div>
+    <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00E676" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><div class="why-title">Алдын ала төлемсіз</div><div class="why-sub">Ақша қолыңызда болғанда ғана төлейсіз</div></div>
+    <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00E676" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M8 10v11M12 10v11M16 10v11M20 10v11"/></svg></div><div class="why-title">ҚР барлық банктері</div><div class="why-sub">Қазақстанның барлық банктерімен жұмыс</div></div>
+    <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00E676" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><div class="why-title">Ресми</div><div class="why-sub">Әр мәміле бойынша шарт. Мөлдір.</div></div>
   </div>
 </div>
 
@@ -305,33 +341,6 @@
 </div>
 
 
-<!-- BANKS -->
-<div class="section fade">
-  <div class="section-title">Қазақстанның барлық банктерімен жұмыс</div>
-  <div class="banks-wrap">
-    <span class="bank-tag">Kaspi Bank</span>
-    <span class="bank-tag">Halyk Bank</span>
-    <span class="bank-tag">Forte Bank</span>
-    <span class="bank-tag">Home Credit</span>
-    <span class="bank-tag">Freedom Finance</span>
-    <span class="bank-tag">Jusan Bank</span>
-    <span class="bank-tag">Bereke Bank</span>
-    <span class="bank-tag">Bank RBK</span>
-    <span class="bank-tag">Евразийский</span>
-    <span class="bank-tag">және басқалар</span>
-  </div>
-</div>
-
-<!-- OFFICIAL PARTNERS -->
-<div class="section fade">
-  <div class="section-title">Ресми серіктестер</div>
-  <div class="partners-official">
-    <div class="partner-official-card">
-      <div class="partner-official-logo" style="background:#2CBF6C;">
-        <span class="partner-official-name">JetCar</span>
-      </div>
-      <div class="partner-official-label">Автонесие</div>
-    </div>
     <div class="partner-official-card">
       <div class="partner-official-logo" style="background:#FF1744;">
         <span class="partner-official-name">Dossym</span>
@@ -347,21 +356,6 @@
   </div>
 </div>
 
-<!-- CITIES -->
-<div class="section fade">
-  <div class="section-title">Қазақстандағы филиалдар</div>
-  <div class="cities-list">
-    <div class="city-item main-city">
-      <div class="city-item-name">📍 Астана</div>
-      <div class="city-item-addr">Абай 18, Шахар БО, 102 каб.<br>Иманов 34 (ипотека және заңды тұлғалар)</div>
-      <a href="tel:+77052606667" class="city-item-phone">+7 705 260 66 67</a>
-    </div>
-    <div class="city-item">
-      <div class="city-item-name">🌆 Алматы</div>
-      <div class="city-item-addr">Мамыр 3 мкр, 3а</div>
-      <a href="tel:+77052606667" class="city-item-phone">+7 705 260 66 67</a>
-    </div>
-  </div>
   <div class="cities-tags">
     <span class="city-tag-sm">Шымкент</span>
     <span class="city-tag-sm">Ақтөбе</span>
@@ -374,18 +368,6 @@
   </div>
 </div>
 
-<!-- SOCIAL CONTACTS -->
-<div class="section fade">
-  <div class="section-title">Бізбен байланысыңыз</div>
-  <div class="social-grid">
-    <a href="https://wa.me/77052606667" class="social-card wa-card" target="_blank">
-      <div class="social-icon">
-        <svg viewBox="0 0 24 24" fill="#25D366" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      </div>
-      <div class="social-info">
-        <div class="social-name">WhatsApp</div>
-        <div class="social-handle">+7 705 260 66 67</div>
-      </div>
       <div class="social-arrow">→</div>
     </a>
     <a href="https://www.instagram.com/sunkar.finance.astana" class="social-card ig-card" target="_blank">

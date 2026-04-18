@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сброс</title>
+  <style>
+    body { background:#060D1F; color:#fff; font-family:sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; text-align:center; padding:20px; }
+    .msg { font-size:18px; margin-bottom:20px; }
+    a { color:#00E676; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="msg" id="msg">Сбрасываю данные...</div>
+    <a href="index.html">← На главную</a>
+  </div>
+  <script>
+    localStorage.removeItem('sf_user');
+    document.getElementById('msg').textContent = '✓ Готово. Теперь закрой и открой приложение заново.';
+  </script>
+</body>
+</html>

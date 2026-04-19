@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Админка — Sunkar Finance</title>
+  <meta name="theme-color" content="#060D1F">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#060D1F; --bg2:#0A1428; --bg3:#0F1C38;
+      --card:rgba(255,255,255,0.04); --card2:rgba(255,255,255,0.07);
+      --green:#00E676; --green2:#00C853; --blue:#2979FF;
+      --gold:#FFD740; --red:#FF5252;
+      --white:#FFFFFF; --gray:rgba(255,255,255,0.55);
+      --gray2:rgba(255,255,255,0.25); --border:rgba(255,255,255,0.08);
+      --radius:20px; --radius-sm:12px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden;}
+
+    /* LOGIN SCREEN */
+    .login-screen{
+      min-height:100vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; padding:24px;
+    }
+    .login-screen.hidden{display:none;}
+    .login-logo{display:flex;flex-direction:column;align-items:center;margin-bottom:40px;}
+    .login-logo img{width:72px;height:72px;object-fit:contain;margin-bottom:14px;filter:drop-shadow(0 0 20px rgba(0,230,118,0.3));}
+    .login-logo-name{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .login-logo-sub{font-size:11px;color:var(--gray);margin-top:4px;letter-spacing:0.1em;text-transform:uppercase;}
+    .login-card{width:100%;max-width:360px;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;position:relative;}
+    .login-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);}
+    .login-title{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:900;margin-bottom:6px;}
+    .login-sub{font-size:12px;color:var(--gray);margin-bottom:24px;}
+    .login-field{margin-bottom:16px;}
+    .login-field label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:7px;letter-spacing:0.06em;text-transform:uppercase;}
+    .login-field input{width:100%;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;color:var(--white);font-size:15px;font-family:'Nunito',sans-serif;font-weight:600;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+    .login-field input:focus{border-color:var(--green);}
+    .login-btn{width:100%;margin-top:8px;padding:16px;background:linear-gradient(135deg,var(--green),var(--blue));border:none;border-radius:var(--radius-sm);color:#fff;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:900;cursor:pointer;letter-spacing:0.04em;}
+    .login-error{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.3);color:#FF6B6B;display:none;}
+
+    /* ADMIN SCREEN */
+    .admin-screen{display:none;}
+    .admin-screen.active{display:block;}
+
+    /* HEADER */
+    .admin-header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(6,13,31,0.95);backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--border);
+      padding:0 16px;height:64px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .admin-header-left{display:flex;align-items:center;gap:10px;}
+    .admin-header-logo{width:36px;height:36px;object-fit:contain;border-radius:8px;}
+    .admin-header-title{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .admin-badge{background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);color:var(--green);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;}
+    .logout-btn{background:var(--card2);border:1px solid var(--border);color:var(--gray);padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;}
+
+    /* CONTENT */
+    .admin-content{padding:20px 16px;max-width:600px;margin:0 auto;padding-bottom:40px;}
+
+    /* STATS ROW */
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+    .stat-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;position:relative;overflow:hidden;}
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue));}
+    .stat-icon{font-size:24px;margin-bottom:8px;}
+    .stat-num{font-family:'Unbounded',sans-serif;font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .stat-label{font-size:11px;color:var(--gray);margin-top:4px;font-weight:600;}
+
+    /* SECTION */
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;margin-top:28px;}
+    .section-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;}
+    .refresh-btn{background:var(--card2);border:1px solid var(--border);color:var(--green);padding:7px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;}
+
+    /* TABLE */
+    .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+    .table-row{display:grid;padding:14px 16px;border-bottom:1px solid var(--border);gap:8px;align-items:center;}
+    .table-row:last-child{border-bottom:none;}
+    .table-head{background:var(--bg3);}
+    .table-head span{font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;}
+
+    /* USERS TABLE */
+    .users-row{grid-template-columns:32px 1fr 1fr auto;}
+    .user-num{font-size:11px;color:var(--gray2);font-weight:700;}
+    .user-name{font-size:13px;font-weight:800;}
+    .user-phone{font-size:12px;color:var(--green);font-weight:700;}
+    .user-date{font-size:10px;color:var(--gray2);text-align:right;}
+
+    /* LEADS TABLE */
+    .leads-row{grid-template-columns:1fr 1fr auto auto;}
+    .lead-name{font-size:13px;font-weight:800;}
+    .lead-type{font-size:11px;color:var(--gray);margin-top:2px;}
+    .lead-amount{font-size:12px;color:var(--gold);font-weight:700;}
+    .lead-prob{font-size:13px;font-weight:900;text-align:right;}
+    .lead-date{font-size:10px;color:var(--gray2);text-align:right;margin-top:2px;}
+
+    /* PROB COLORS */
+    .prob-high{color:var(--green);}
+    .prob-mid{color:var(--gold);}
+    .prob-low{color:var(--red);}
+
+    /* EMPTY */
+    .empty{padding:32px;text-align:center;color:var(--gray);font-size:13px;}
+
+    /* LOADING */
+    .loading-row{padding:24px;text-align:center;color:var(--gray);font-size:13px;}
+
+    /* TAB SWITCHER */
+    .tabs{display:flex;gap:8px;margin-bottom:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px;}
+    .tab{flex:1;padding:10px;text-align:center;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;color:var(--gray);}
+    .tab.active{background:linear-gradient(135deg,var(--green),var(--blue));color:#fff;}
+
+    /* GLOW */
+    body::before{content:'';position:fixed;top:-200px;right:-200px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(41,121,255,0.1),transparent 70%);pointer-events:none;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .fade-in{animation:fadeUp 0.4s ease both;}
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-logo">
+      <img src="img/logo-full.png" alt="Sunkar">
+      <div class="login-logo-name">SUNKAR FINANCE</div>
+      <div class="login-logo-sub">Панель управления</div>
+    </div>
+    <div class="login-card">
+      <div class="login-title">Вход в админку</div>
+      <div class="login-sub">Только для администратора</div>
+      <div class="login-field">
+        <label>Пароль</label>
+        <input type="password" id="passInput" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPass()">
+      </div>
+      <button class="login-btn" onclick="checkPass()">Войти →</button>
+      <div class="login-error" id="loginError">Неверный пароль</div>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div class="admin-screen" id="adminScreen">
+
+    <div class="admin-header">
+      <div class="admin-header-left">
+        <img src="img/logo.png" alt="SF" class="admin-header-logo">
+        <div>
+          <div class="admin-header-title">SUNKAR FINANCE</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="admin-badge">● Онлайн</span>
+        <button class="logout-btn" onclick="logout()">Выйти</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- STATS -->
+      <div class="stats-grid fade-in" id="statsGrid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-num" id="statUsers">—</div>
+          <div class="stat-label">Пользователей</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📋</div>
+          <div class="stat-num" id="statLeads">—</div>
+          <div class="stat-label">Заявок</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-num" id="statAvgProb">—</div>
+          <div class="stat-label">Средняя вероятность</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🕐</div>
+          <div class="stat-num" id="statToday">—</div>
+          <div class="stat-label">Сегодня заявок</div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" id="tab1" onclick="switchTab('users')">👥 Пользователи</div>
+        <div class="tab" id="tab2" onclick="switchTab('leads')">📋 Заявки</div>
+      </div>
+
+      <!-- USERS -->
+      <div id="usersSection">
+        <div class="section-header">
+          <div class="section-title">Все пользователи</div>
+          <button class="refresh-btn" onclick="loadData()">↻ Обновить</button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-row users-row table-head">
+            <span>#</span><span>Имя</span><span>Телефон</span><span>Дата</span>
+          </div>
+          <div id="usersList"><div class="loading-row">Загрузка...</div></div>
+        </div>
+      </div>
+
+      <!-- LEADS -->
+      <div id="leadsSection" style="display:none;">
+        <div class="section-header">
+          <div class="section-title">Все заявки</div>
+          <button class="refresh-btn" onclick="loadData()">↻ Обновить</button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-row leads-row table-head">
+            <span>Клиент</span><span>Сумма</span><span>%</span><span>Дата</span>
+          </div>
+          <div id="leadsList"><div class="loading-row">Загрузка...</div></div>
+        </div>
+      </div>
+
+      <!-- PUSH NOTIFICATIONS -->
+      <div style="margin-top:28px;">
+        <div class="section-header">
+          <div class="section-title">📢 Push уведомление</div>
+        </div>
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;">
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:7px;letter-spacing:0.06em;text-transform:uppercase;">Заголовок</label>
+            <input type="text" id="pushTitle" placeholder="Новое предложение" style="width:100%;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--white);font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;outline:none;-webkit-appearance:none;">
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:7px;letter-spacing:0.06em;text-transform:uppercase;">Сообщение</label>
+            <textarea id="pushBody" placeholder="Текст уведомления..." rows="3" style="width:100%;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--white);font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;outline:none;resize:none;"></textarea>
+          </div>
+          <button onclick="sendPush()" id="pushBtn" style="width:100%;padding:14px;background:linear-gradient(135deg,var(--green),var(--blue));border:none;border-radius:12px;color:#fff;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:900;cursor:pointer;letter-spacing:0.02em;">
+            📢 Отправить всем пользователям
+          </button>
+          <div id="pushResult" style="margin-top:12px;font-size:13px;display:none;padding:10px 14px;border-radius:10px;font-weight:600;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const PASS = '12345';
+    const SUPABASE_URL = 'https://yfkifwujrjugtooodnbp.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_v7s8h7vwh0-b_Qq8IFnXOQ_Sa1fa3zd';
+    // ВСТАВЬ URL Railway сервера после деплоя
+    const RAILWAY_URL = 'https://sunkar-push-server.onrender.com';
+    const ADMIN_SECRET = 'sunkar-admin-2026';
+
+    // Auth check
+    if (sessionStorage.getItem('sf_admin') === 'true') {
+      showAdmin();
+    }
+
+    function checkPass() {
+      var p = document.getElementById('passInput').value;
+      if (p === PASS) {
+        sessionStorage.setItem('sf_admin', 'true');
+        showAdmin();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('passInput').value = '';
+      }
+    }
+
+    function showAdmin() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('adminScreen').classList.add('active');
+      loadData();
+    }
+
+    function logout() {
+      sessionStorage.removeItem('sf_admin');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('adminScreen').classList.remove('active');
+      document.getElementById('passInput').value = '';
+    }
+
+    function switchTab(tab) {
+      if (tab === 'users') {
+        document.getElementById('usersSection').style.display = 'block';
+        document.getElementById('leadsSection').style.display = 'none';
+        document.getElementById('tab1').classList.add('active');
+        document.getElementById('tab2').classList.remove('active');
+      } else {
+        document.getElementById('usersSection').style.display = 'none';
+        document.getElementById('leadsSection').style.display = 'block';
+        document.getElementById('tab1').classList.remove('active');
+        document.getElementById('tab2').classList.add('active');
+      }
+    }
+
+    async function loadData() {
+      await Promise.all([loadUsers(), loadLeads()]);
+    }
+
+    async function loadUsers() {
+      try {
+        var res = await fetch(SUPABASE_URL + '/rest/v1/users?order=created_at.desc', {
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY
+          }
+        });
+        var users = await res.json();
+
+        document.getElementById('statUsers').textContent = users.length;
+
+        var html = '';
+        if (!users.length) {
+          html = '<div class="empty">Пока нет пользователей</div>';
+        } else {
+          users.forEach(function(u, i) {
+            var d = new Date(u.created_at);
+            var date = d.toLocaleString('ru-KZ', {timeZone:'Asia/Almaty', day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+            html += '<div class="table-row users-row">' +
+              '<div class="user-num">' + (i+1) + '</div>' +
+              '<div class="user-name">' + (u.name||'—') + '</div>' +
+              '<div class="user-phone">' + (u.phone||'—') + '</div>' +
+              '<div class="user-date">' + date + '</div>' +
+              '</div>';
+          });
+        }
+        document.getElementById('usersList').innerHTML = html;
+      } catch(e) {
+        document.getElementById('usersList').innerHTML = '<div class="empty">Ошибка загрузки</div>';
+      }
+    }
+
+    async function loadLeads() {
+      try {
+        var res = await fetch(SUPABASE_URL + '/rest/v1/leads?order=created_at.desc', {
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY
+          }
+        });
+        var leads = await res.json();
+
+        document.getElementById('statLeads').textContent = leads.length;
+
+        // Средняя вероятность
+        var withProb = leads.filter(function(l){ return l.probability; });
+        if (withProb.length) {
+          var avg = Math.round(withProb.reduce(function(s,l){ return s + l.probability; }, 0) / withProb.length);
+          document.getElementById('statAvgProb').textContent = avg + '%';
+        } else {
+          document.getElementById('statAvgProb').textContent = '—';
+        }
+
+        // Сегодня
+        var today = new Date().toISOString().slice(0,10);
+        var todayCount = leads.filter(function(l){ return l.created_at && l.created_at.startsWith(today); }).length;
+        document.getElementById('statToday').textContent = todayCount;
+
+        var html = '';
+        if (!leads.length) {
+          html = '<div class="empty">Пока нет заявок</div>';
+        } else {
+          leads.forEach(function(l) {
+            var d = new Date(l.created_at);
+            var date = d.toLocaleString('ru-KZ', {timeZone:'Asia/Almaty', day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+            var probClass = l.probability >= 75 ? 'prob-high' : l.probability >= 60 ? 'prob-mid' : 'prob-low';
+            var probText = l.probability ? l.probability + '%' : '—';
+            html += '<div class="table-row leads-row">' +
+              '<div><div class="lead-name">' + (l.name||'—') + '</div><div class="lead-type">' + (l.type||'—') + '</div><div style="font-size:11px;color:var(--green);margin-top:2px">' + (l.phone||'') + '</div></div>' +
+              '<div class="lead-amount">' + (l.amount||'—') + '</div>' +
+              '<div class="lead-prob ' + probClass + '">' + probText + '</div>' +
+              '<div class="user-date">' + date + '</div>' +
+              '</div>';
+          });
+        }
+        document.getElementById('leadsList').innerHTML = html;
+      } catch(e) {
+        document.getElementById('leadsList').innerHTML = '<div class="empty">Ошибка загрузки</div>';
+      }
+    }
+    async function sendPush() {
+      var title = document.getElementById('pushTitle').value.trim();
+      var body = document.getElementById('pushBody').value.trim();
+      var btn = document.getElementById('pushBtn');
+      var result = document.getElementById('pushResult');
+
+      if (!title) { alert('Введите заголовок'); return; }
+      if (!body)  { alert('Введите текст сообщения'); return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Отправка...';
+      result.style.display = 'none';
+
+      try {
+        var res = await fetch(RAILWAY_URL + '/send-all', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-secret': ADMIN_SECRET
+          },
+          body: JSON.stringify({ title, body })
+        });
+        var data = await res.json();
+        result.style.display = 'block';
+        result.style.background = 'rgba(0,230,118,0.1)';
+        result.style.border = '1px solid rgba(0,230,118,0.3)';
+        result.style.color = '#00E676';
+        result.textContent = '✓ Отправлено ' + (data.sent || 0) + ' из ' + (data.total || 0) + ' пользователей';
+        document.getElementById('pushTitle').value = '';
+        document.getElementById('pushBody').value = '';
+      } catch(e) {
+        result.style.display = 'block';
+        result.style.background = 'rgba(255,82,82,0.1)';
+        result.style.border = '1px solid rgba(255,82,82,0.3)';
+        result.style.color = '#FF6B6B';
+        result.textContent = '⚠ Ошибка. Проверь Railway URL в admin.html';
+      }
+
+      btn.disabled = false;
+      btn.textContent = '📢 Отправить всем пользователям';
+    }
+  </script>
+
+</body>
+</html>
